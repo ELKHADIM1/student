@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>نتائج الطلاب</title>
+</head>
+<body>
+    <h2>استعلام عن النقطة</h2>
+    <form method="post">{% csrf_token %}
+        <label>رقم أبوجي:</label><br>
+        <input type="text" name="apogee"><br>
+        <label>رقم البطاقة الوطنية:</label><br>
+        <input type="text" name="cin"><br>
+        <button type="submit">عرض النقط</button>
+    </form>
+
+    {% if error %}<p style="color:red">{{ error }}</p>{% endif %}
+    {% if grades %}
+        <h3>نقط الطالب:</h3>
+        <table border="1">
+            <tr>
+                <th>اسم الطالب</th>
+                <th>الوحدة</th>
+                <th>النقطة</th>
+                <th>النتيجة</th>
+                <th>الدورة</th>
+                <th>السنة</th>
+            </tr>
+            {% for g in grades %}
+            <tr>
+                <td>{{ g.full_name }}</td>
+                <td>{{ g.module }}</td>
+                <td>{{ g.grade }}</td>
+                <td>{{ g.result }}</td>
+                <td>{{ g.session }}</td>
+                <td>{{ g.year }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
